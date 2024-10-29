@@ -1,5 +1,16 @@
 #include<stdio.h>
 #define n 5
+int stack[n];
+int top=-1;
+void push( int x ){
+    if( top==n-1 ){
+        printf("OVERFLOW");
+    }
+    else{
+        stack[top]=x;
+        top++;
+    }
+}
 int main(){
     int choice;
     while( 1 ){

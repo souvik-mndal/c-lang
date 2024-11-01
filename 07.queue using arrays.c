@@ -1,5 +1,20 @@
 #include<stdio.h>
 #define n 5
+int queue[n];
+int front = -1 , rear = -1 ;
+void push( int x ){
+    if( rear == n-1 ){
+        printf("\nOVERFLOW\n");
+    }
+    else if( rear==-1 && front==-1){
+        front++;rear++;
+        queue[rear] = x;
+    }
+    else{
+        front++;
+        queue[front] = x ;
+    }
+}
 int main(){
 int choice,x;
     while( 1 ){

@@ -3,7 +3,7 @@
 int main(){
 int choice,x;
     while( 1 ){
-        printf("Enter 1 for push \nEnter 2 for pop\nEnter 3 for finding the peek element\nEnter 4 for display the stack\nEnter 5 to check full\nEnter 6to check empty\nEnter 7 to exit \n");
+        printf("Enter 1 for push \nEnter 2 for pop\nEnter 3 for finding the peek element\nEnter 4 for display the stack\nEnter 5 to check empty\nEnter 6 to exit \n");
         printf("Enter what you want to choose : ");
         scanf( "%d",&choice);
         switch( choice ){
@@ -26,6 +26,10 @@ int choice,x;
                 printf("\n\n");
                 break;
             case 5:
+                empty();
+                printf("\n\n");
+                break;
+            case 6:
                 printf("EXITED SUCCESSFULLY\n\n");
                 return 0;
                 break;

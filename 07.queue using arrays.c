@@ -11,14 +11,54 @@ void push( int x ){
         queue[rear] = x;
     }
     else{
-        front++;
-        queue[front] = x ;
+        rear++;
+        queue[rear] = x ;
     }
 }
+void pop( ){
+    if( front==-1 ){
+        printf("\nUNDERFFLOW\n");
+    }
+    else if( front==rear ){
+        front=-1;
+        rear=-1;
+    }
+    else{
+        printf("\nThe popped element is : %d \n",queue[front]);
+        front++;
+    }
+}
+void peek( ){
+    if( front==-1 ){
+        printf("\nQUEUE IS EMPTY\n");
+    }
+    else{
+        printf("\nTHE PEEK ELEMENT IS : %d \n",queue[front]);
+    }
+}
+void display(){
+    if( front==-1 ){
+        printf("\nQUEUE IS EMPTY\n");
+    }
+    else{
+        for( int i=front ; i<=rear ; i++ ){
+            printf("%d ",queue[i]);
+        }
+    }
+}
+void empty(){
+    if( front==-1 && rear==-1 ){
+        printf("\nQUEUE IS EMPTY\n");
+    }
+    else{
+        printf("QUEUE IS NOT EMPTY ");
+    }
+}
+
 int main(){
 int choice,x;
     while( 1 ){
-        printf("Enter 1 for push \nEnter 2 for pop\nEnter 3 for finding the peek element\nEnter 4 for display the stack\nEnter 5 to check empty\nEnter 6 to exit \n");
+        printf("Enter 1 for push \nEnter 2 for pop\nEnter 3 for finding the peek element\nEnter 4 for display the queue\nEnter 5 to check empty\nEnter 6 to exit \n");
         printf("Enter what you want to choose : ");
         scanf( "%d",&choice);
         switch( choice ){

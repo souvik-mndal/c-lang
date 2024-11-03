@@ -5,7 +5,7 @@ int main(){
     scanf("%d",&n);
     int arr[n];
     for( int i=0 ; i<n ; i++ ){
-        printf("Enter the element for index : %d ",i);
+        printf("Enter the element for index  %d :",i);
         scanf("%d",&arr[i]);
     }
     int x;
@@ -17,7 +17,8 @@ int main(){
         int mid = s+(e-s)/2;
         if( arr[mid]==x ){
             flag=1;
-            printf("The element is present at : %d", mid);
+            printf("The element is present at index : %d", mid);
+            break;
         }
         else if( arr[mid]<x ){
             s=mid+1;

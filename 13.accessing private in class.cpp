@@ -1,4 +1,4 @@
-#include<iostream>
+#include<bits/stdc++.h>
 using namespace std;
 class student{
     private:
@@ -15,8 +15,20 @@ class student{
     void setroll( int n ){
         roll = n;
     }
-    void setgrade{ string s ){
+    void setgrade( string s ){
         grade = s;
+    }
+    string getname( ){
+        return name;
+    }
+    int getage(){
+        return  age;
+    }
+    int getroll(){
+        return roll;
+    }
+    int getgrade(){
+        return grade;
     }
 };
 int main(){
@@ -25,7 +37,7 @@ int main(){
     s1.setage( 17 );
     s1.setroll( 173 );
     s1.setgrade( "B+" );
-    cout<<s1.name<<" "<<s1.age<<" "<<s1.roll<<" "<<s1.grade;
+    cout<<s1.getname()<<" "<<s1.getage()<<" "<<s1.getroll()<<" "<<s1.getgrade();
     // s1.name = "SM";
     // s1.age = 17;
 

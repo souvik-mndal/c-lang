@@ -27,7 +27,7 @@ class student{
     int getroll(){
         return roll;
     }
-    int getgrade(){
+    string getgrade(){
         return grade;
     }
 };

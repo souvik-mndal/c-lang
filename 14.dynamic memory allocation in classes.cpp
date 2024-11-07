@@ -13,5 +13,5 @@ int main(){
     (*s).age = 17;
     (*s).roll = 173;
     (*s).grade = "B+";
-    
+    cout<<s->name<<" "<<s->age<<" "<<s->roll<<" "<<s->grade;
 }

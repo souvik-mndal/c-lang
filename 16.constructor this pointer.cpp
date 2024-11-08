@@ -19,4 +19,6 @@ class student{
 int main(){
     student s1( "SM" , 17 , 173 , "B+" );
     s1.display();
+    student s2( "KM" , 50 , 17 , "A+" );
+    s2.display();
 }

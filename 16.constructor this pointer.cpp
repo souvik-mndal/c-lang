@@ -6,11 +6,11 @@ class student{
     int age,roll;
     string grade;
     public:
-    student( string s , int a , int b , string t ){
-        name = s ;
-        age = a ;
-        roll = b ;
-        grade = t;
+    student( string name , int age , int roll , string grade ){
+        this->name = name ;
+        this->age = age ;
+        this->roll = roll ;
+        this->grade = grade ;
     }
     void display( ){
         cout<<name<<" "<<age<<" "<<roll<<" "<<grade<<endl;

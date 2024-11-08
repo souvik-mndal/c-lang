@@ -27,4 +27,6 @@ int main(){
     s1.display();
     student s2( s1 );
     s2.display();
+    student s3( s1 );
+    s3.display();
 }

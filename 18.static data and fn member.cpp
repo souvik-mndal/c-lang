@@ -1,16 +1,22 @@
 #include<iostream>
 using namespace std;
 class student{
-    public:
+    private:
     string name;
-    int age,roll;
-    string grade;
+    int balance;
+    static int customer_no;
+    public:
+    student( string s , int no ){
+        name = s ;
+        balance = no ;
+        customer_no++;
+    }
+    void display(){
+        cout<<customer_no<<endl;
+    }
 };
+int student::customer_no=0;
 int main(){
-    student s1 = {"SM" , 17 , 173 , "B+"};
-    cout<<s1.name<<" "<<s1.age<<" "<<s1.roll<<" "<<s1.grade;
-    // s1.name = "SM";
-    // s1.age = 17;
-    // s1.roll = 173;
-    // s1.grade = "B+";
+    student s1("sm" , 1000 );
+    s1.display();
 }

@@ -3,10 +3,10 @@ using namespace std;
 // acc_no balance name pin
 // withdram transfer viewbalance exit
 class atm{
-    string name;
-    long long int account_no;
-    int balance;
-    int pin;
+    string name="Souvik Mondal";
+    long long int account_no = 13457941241;
+    int balance=0;
+    int pin=1234;
     public:
     void withdraw(){
         int n;
@@ -54,7 +54,7 @@ class atm{
                 cout<<"SORRY ! TOU HAVE ENTERED THE ERONG PIN...PLEASE TRY AGAIN\n";
             }
             else{
-                cout<<"WELCOME SIR ... WHAT DO YOU WANT TO DO\n";
+                cout<<"WELCOME MR "<<name<<" WHAT DO YOU WANT TO DO\n";
                 while(1){
                     int no;
                     cout<<"Enter 1 for withdraw\nEnter 2 for transfer\nEnter 3 to view balance\nEnter 4 to exit\n";
@@ -84,5 +84,5 @@ class atm{
     }
 }
 int main(){
-    
+
 }

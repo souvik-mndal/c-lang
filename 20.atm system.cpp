@@ -54,6 +54,16 @@ class atm{
                 cout<<"SORRY ! TOU HAVE ENTERED THE ERONG PIN...PLEASE TRY AGAIN\n";
             }
             else{
+                cout<<"WELCOME SIR ... WHAT DO YOU WANT TO DO\n";
+                while(1){
+                    int no;
+                    cout<<"Enter 1 for withdraw\nEnter 2 for transfer\nEnter 3 to view balance\nEnter 4 to exit\n";
+                    cout<<"Enter your choice : ";
+                    cin>>no;
+                    switch(no){
+                        
+                    }
+                }
                 
             }
         }

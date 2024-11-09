@@ -14,6 +14,7 @@ class atm{
         cin>>n;
         balance = balance - n;
         if( balance < 0 ){
+            balance=0;
             cout<<"Insufficient balance\n ";
         }
         else{
@@ -27,15 +28,27 @@ class atm{
         cin>>n;
         switch( n ){
             case 1 :
-                balance +=n ;
+                int n1;
+                cout<<"Enter the amount you want to transfer : ";
+                cin>>n1;
+                balance = balance + n1;
                 cout<<"SUCCESSFULL...\n";
                 break;
             case 2:
                 long long int acc;
                 cout<<"Enter the account number where you want to transfer : ";
                 cin>>acc;
-                balance-=n;
-                cout<<"TRANSFERED SUCCESSFULLY...\n";
+                int n2;
+                cout<<"Enter the amount you want to transfer : ";
+                cin>>n2;
+                balance = balance - n2;
+                if( balance < 0 ){
+                    balance=0;
+                    cout<<"Insufficient balance\n ";
+                }
+                else{
+                    cout<<"TRANSFERED SUCCESSFULLY...\n";
+                }
                 break;
             default:
                 cout<<"WRONG KEY...\n";

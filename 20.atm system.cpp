@@ -52,6 +52,7 @@ class atm{
         while( chance>2 ){
             if( check!=pin ){
                 cout<<"SORRY ! TOU HAVE ENTERED THE ERONG PIN...PLEASE TRY AGAIN\n";
+                chance++;
             }
             else{
                 cout<<"WELCOME MR "<<name<<" WHAT DO YOU WANT TO DO\n";
@@ -80,9 +81,12 @@ class atm{
                 
             }
         }
-        cout<<"YOUR ACCOUNT HAS BEEN LOCKED FOR 24HRS\n";
+        if( chance==3 ){
+            cout<<"YOUR ACCOUNT HAS BEEN LOCKED FOR 24HRS\n";
+        }
     }
-}
+};
 int main(){
-
+    atm a1;
+    a1.key();
 }

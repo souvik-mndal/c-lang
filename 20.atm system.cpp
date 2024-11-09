@@ -61,14 +61,28 @@ class atm{
                     cout<<"Enter your choice : ";
                     cin>>no;
                     switch(no){
-                        
+                        case 1:
+                            withdraw();
+                            break;
+                        case 2:
+                            transfer();
+                            break;
+                        case 3:
+                            viewbal();
+                            break;
+                        case 4:
+                            cout<<"THANK YOU .... VISIT AGAIN \n";
+                            return ;
+                        default:
+                            cout<<"OOPS ! SOMETHING WENT WRONG\n ";
                     }
                 }
                 
             }
         }
+        cout<<"YOUR ACCOUNT HAS BEEN LOCKED FOR 24HRS\n";
     }
 }
 int main(){
-
+    
 }

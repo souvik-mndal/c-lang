@@ -45,11 +45,12 @@ class atm{
         cout<<"Your current balance is : "<<balance<<endl;
     }
     void key(){
-        int check;
-        cout<<"Enter the pin : ";
-        cin>>check;
+        
         int chance=0;
-        while( chance>2 ){
+        while( chance<=2 ){
+            int check;
+            cout<<"Enter the pin : ";
+            cin>>check;
             if( check!=pin ){
                 cout<<"SORRY ! TOU HAVE ENTERED THE ERONG PIN...PLEASE TRY AGAIN\n";
                 chance++;

@@ -19,4 +19,8 @@ int student::customer_no=0;
 int main(){
     student s1("sm" , 1000 );
     s1.display();
+    student s1("km" , 2000 );
+    s1.display();
+    student s1("bm" , 3000 );
+    s1.display();
 }

@@ -4,12 +4,12 @@ class student{
     private:
     int age;
     public:
-    student(int age ){
-        if( age>100 && age<=0 ){
-            cout<<"Invalid";
+    void setage(int age ){
+        if( age<=100 && age>0 ){
+            this->age = age;
         }
         else{
-            this->age = age;
+            cout<<"Invalid";
         }
     }
     void display(){
@@ -17,10 +17,9 @@ class student{
     }
 };
 int main(){
-    student s1(99);
+    student s1;
+    s1.setage(99);
     s1.display();
-    student s2(109);
-    s2.display();
-    student s3(18);
-    s3.display();
+    student s2;
+    s2.setage(109);
 }

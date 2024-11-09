@@ -46,10 +46,16 @@ class atm{
     }
     void key(){
         int check;
-        cout<<"Enter~"
-        if( check==pin ){
-            int n;
-            cout<<"Enter "
+        cout<<"Enter the pin : ";
+        cin>>check;
+        int chance=0;
+        while( chance>2 ){
+            if( check!=pin ){
+                cout<<"SORRY ! TOU HAVE ENTERED THE ERONG PIN...PLEASE TRY AGAIN\n";
+            }
+            else{
+                
+            }
         }
     }
 }

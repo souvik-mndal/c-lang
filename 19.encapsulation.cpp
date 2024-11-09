@@ -19,4 +19,8 @@ class student{
 int main(){
     student s1(99);
     s1.display();
+    student s2(109);
+    s2.display();
+    student s3(18);
+    s3.display();
 }

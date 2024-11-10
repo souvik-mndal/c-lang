@@ -1,11 +1,10 @@
-#include<iostream>
+#include<bits/stdc++.h>
 using namespace std;
 // item_code item_price count 
 // get_item display_sum remove display end
 class shopping{
-    string item_code;
-    int item_price;
-    int count = 0;
+    vector<string>item_code;
+    vector<int>item_price;
     static int balance;
     public:
     void put_items(){
@@ -15,9 +14,8 @@ class shopping{
         cin>>code;
         cout<<"Enter the price of the item : ";
         cin>>price;
-        item_code = code;
-        item_price = price;
-        count = count+1;
+        item_code.push_back(code);
+        item_price.push_back(price);
         balance+=price;
     }
     static int bal(){
@@ -27,10 +25,18 @@ class shopping{
         cout<<"The total price of the items are : "<<bal()<<endl;
     }
     void remove(){
-
+        int n=item_code.size();
+        cout<<"Enter the number which item you want to delete out of "<<n<<" inputs : ";
+        int value;
+        cin>>value;
+        balance=balance-item_price[value-1];
+        item_price.erase(item_price.begin()+value-1);
     }
     void display(){
-        cout<<count<<" "<<item_code<<" "<<item_price<<endl;
+        int n=item_code.size();
+        for( int i=0 ; i<n ; i++ ){
+            cout<<i+1<<" "<<item_code[i]<<" "<<item_price[i]<<endl;
+        }
     }
 };
 int shopping::balance = 0;

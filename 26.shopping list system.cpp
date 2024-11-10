@@ -5,7 +5,7 @@ using namespace std;
 class shopping{
     string item_code;
     int item_price;
-    static int count;
+    int count = 0;
     static int balance;
     public:
     void put_items(){
@@ -17,7 +17,7 @@ class shopping{
         cin>>price;
         item_code = code;
         item_price = price;
-        count++;
+        count = count+1;
         balance+=price;
     }
     static int bal(){
@@ -26,8 +26,13 @@ class shopping{
     void display_sum(){
         cout<<"The total price of the items are : "<<bal()<<endl;
     }
+    void remove(){
+
+    }
+    void display(){
+        cout<<count<<" "<<item_code<<" "<<item_price<<endl;
+    }
 };
-int shopping::count = 0;
 int shopping::balance = 0;
 int main(){
     shopping *s = new shopping;
@@ -42,6 +47,15 @@ int main(){
                 break;
             case 2 :
                 s->display_sum();
+                break;
+            case 3 :
+                s->remove();
+                break;
+            case 4 :
+                s->display();
+                break;
+            case 5 :
+                cout<<"happy to help you\n";
                 break;
             default:
                 cout<<"OOPS Something went wrong\n";

@@ -20,5 +20,17 @@ class shopping{
 };
 int shopping::count = 0;
 int main(){
+    shopping *s = new shopping;
+    while(1){
+        cout<<"Enter 1 to place the item value\nEnter 2 to display the sum of the price\nEnter 3 to remove any items \nEnter 4 to display the items\nEnter 5 to exit\n";
+        int n;
+        cout<<"Enter your choice : ";
+        cin>>n;
+        switch(n){
+            case 1 :
+                
+        }
+    }
+    
 
 }

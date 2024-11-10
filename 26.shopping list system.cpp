@@ -20,6 +20,12 @@ class shopping{
         count++;
         balance+=price;
     }
+    static int bal(){
+        return balance;
+    }
+    void display_sum(){
+        cout<<"The total price of the items are : "<<bal()<<endl;
+    }
 };
 int shopping::count = 0;
 int shopping::balance = 0;
@@ -33,6 +39,9 @@ int main(){
         switch(n){
             case 1 :
                 s->put_items();
+                break;
+            case 2 :
+                s->display_sum();
                 break;
             default:
                 cout<<"OOPS Something went wrong\n";

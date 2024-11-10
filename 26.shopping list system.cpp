@@ -31,9 +31,14 @@ class shopping{
         cin>>value;
         balance=balance-item_price[value-1];
         item_price.erase(item_price.begin()+value-1);
+        item_code.erase(item_code.begin()+value-1);
+        cout<<"removed successfully...\n";
     }
     void display(){
         int n=item_code.size();
+        if( n==0 ){
+            cout<<"NO items placed\n";
+        }
         for( int i=0 ; i<n ; i++ ){
             cout<<i+1<<" "<<item_code[i]<<" "<<item_price[i]<<endl;
         }

@@ -6,6 +6,7 @@ class shopping{
     string item_code;
     int item_price;
     static int count;
+    static int balance;
     public:
     void put_items(){
         string code;
@@ -16,9 +17,12 @@ class shopping{
         cin>>price;
         item_code = code;
         item_price = price;
+        count++;
+        balance+=price;
     }
 };
 int shopping::count = 0;
+int shopping::balance = 0;
 int main(){
     shopping *s = new shopping;
     while(1){
@@ -28,9 +32,10 @@ int main(){
         cin>>n;
         switch(n){
             case 1 :
-                
+                s->put_items();
+                break;
+            default:
+                cout<<"OOPS Something went wrong\n";
         }
     }
-    
-
 }

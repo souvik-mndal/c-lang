@@ -8,6 +8,9 @@ class value{
         cout<<"The value is : "<<x<<endl;
     }
 };
+void value :: setdata( int n ){
+    x = n;
+}
 int main(){
-
+    
 }

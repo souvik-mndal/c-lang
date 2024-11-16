@@ -14,7 +14,7 @@ int main(){
     int choice,data;
     struct node *head=0, *temp ,*newnode ,*tail;
     while( 1 ){
-        printf("Enter 1 to create a new node\nenter 2 to display\nEnter 3 to insert at the begining\n");
+        printf("Enter 1 to create a new node\nenter 2 to display\nEnter 3 to insert at the begining\nEnter 4 to insert at the end\n");
         printf("Enter the choice : ");
         scanf("%d",&choice);
         switch(choice){
@@ -53,6 +53,19 @@ int main(){
                 tail->next=head;
             }
             
+            break;
+            case 4:
+            printf("Enter the element : ");
+            scanf("%d",&data);
+            newnode=creating( data );
+            if(head==0){
+                head=tail=newnode;
+            }
+            else{
+                tail->next=newnode;
+                tail=newnode;
+            }
+            newnode->next=head;
             break;
             default:
             return 0;

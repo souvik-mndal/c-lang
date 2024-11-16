@@ -11,10 +11,10 @@ struct node *creating( int n ){
     return newnode;
 }
 int main(){
-    int choice,data;
-    struct node *head=0, *temp ,*newnode ,*tail;
+    int choice,data,i,pos;
+    struct node *head=0, *temp ,*newnode ,*tail , *prev;
     while( 1 ){
-        printf("Enter 1 to create a new node\nenter 2 to display\nEnter 3 to insert at the begining\nEnter 4 to insert at the end\n");
+        printf("Enter 1 to create a new node\nenter 2 to display\nEnter 3 to insert at the begining\nEnter 4 to insert at the end\nEnter 5 to insert at any position\n");
         printf("Enter the choice : ");
         scanf("%d",&choice);
         switch(choice){
@@ -66,6 +66,22 @@ int main(){
                 tail=newnode;
             }
             newnode->next=head;
+            break;
+            case 5:
+            printf("Enter the element : ");
+            scanf("%d",&data);
+            printf("Enter the position : ");
+            scanf("%d",&pos);
+            newnode=creating( data );
+            temp=head;
+            i=1;
+            while( i<pos ){
+                prev = temp;
+                temp = temp->next;
+                i++;
+            }
+            prev->next=newnode;
+            newnode->next=temp;
             break;
             default:
             return 0;

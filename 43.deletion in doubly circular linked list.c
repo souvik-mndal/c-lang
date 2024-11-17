@@ -12,6 +12,7 @@ struct node *creating( int n ){
     newnode->next=0;
     return newnode;
 }
+
 int main(){
     struct node *newnode , *head=0 , *tail , *temp ,*prev;
     int choice , data , i ,pos;

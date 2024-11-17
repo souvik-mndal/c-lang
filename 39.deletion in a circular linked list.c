@@ -99,9 +99,19 @@ int main(){
             tail=trav;
             free(temp);
             break;
-            // case 8:
-            
-            // break;
+            case 8:
+            printf("Enter the position : ");
+            scanf("%d",&pos);
+            i=1;
+            temp=head;
+            while(i<pos){
+                prev=temp;
+                temp=temp->next;
+                i++;
+            }
+            prev->next=temp->next;
+            free(temp);
+            break;
             default:
             return 0;
         }

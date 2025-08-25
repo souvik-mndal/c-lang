@@ -26,7 +26,8 @@ const vertexShader = /* glsl */ `
   }
 `;
 
-// Fragment shader generates evolving high-contrast abstract black/white forms
+// Fragment shader renders large tapered strokes with cutout holes, matching the
+// reference’s bold white-on-black calligraphic shapes.
 const fragmentShader = /* glsl */ `
   precision highp float;
   uniform vec3 iResolution;
@@ -34,93 +35,93 @@ const fragmentShader = /* glsl */ `
   uniform vec2 iMouse;
   varying vec2 vUv;
 
-  // Hash, noise and fbm helpers
-  float hash(vec2 p) {
-    p = fract(p * vec2(123.34, 345.45));
-    p += dot(p, p + 34.345);
-    return fract(p.x * p.y);
+  // Signed distance to a line segment
+  float sdSegment(vec2 p, vec2 a, vec2 b) {
+    vec2 pa = p - a, ba = b - a;
+    float h = clamp(dot(pa, ba) / dot(ba, ba), 0.0, 1.0);
+    return length(pa - ba * h);
   }
 
-  float noise(vec2 p) {
-    vec2 i = floor(p);
-    vec2 f = fract(p);
-    // Quintic curve for smooth interpolation
-    vec2 u = f*f*f*(f*(f*6.0-15.0)+10.0);
-    float a = hash(i + vec2(0.0, 0.0));
-    float b = hash(i + vec2(1.0, 0.0));
-    float c = hash(i + vec2(0.0, 1.0));
-    float d = hash(i + vec2(1.0, 1.0));
-    return mix(mix(a, b, u.x), mix(c, d, u.x), u.y);
+  vec2 bezier(vec2 a, vec2 b, vec2 c, vec2 d, float t) {
+    float u = 1.0 - t;
+    float uu = u*u;
+    float tt = t*t;
+    return uu*u*a + 3.0*uu*t*b + 3.0*u*tt*c + tt*t*d;
   }
 
-  float fbm(vec2 p) {
-    float value = 0.0;
-    float amp = 0.5;
-    float freq = 1.0;
-    for (int i = 0; i < 6; i++) {
-      value += amp * noise(p * freq);
-      p += vec2(37.0, 17.0);
-      freq *= 2.0;
-      amp *= 0.5;
+  // Distance to a tapered cubic Bezier stroke (polyline approximation)
+  float sdBezierStroke(vec2 p, vec2 a, vec2 b, vec2 c, vec2 d, float r0, float r1) {
+    const int N = 48; // segments
+    float minD = 1e9;
+    vec2 prev = a;
+    float prevT = 0.0;
+    for (int i = 1; i <= N; i++) {
+      float t = float(i) / float(N);
+      vec2 cur = bezier(a, b, c, d, t);
+      float midT = 0.5 * (t + prevT);
+      // Subtle width modulation for organic edges
+      float wobble = 0.04 * sin(12.0 * midT + iTime * 0.9);
+      float r = mix(r0, r1, midT) * (1.0 + wobble);
+      float dseg = sdSegment(p, prev, cur) - r;
+      minD = min(minD, dseg);
+      prev = cur;
+      prevT = t;
     }
-    return value;
+    return minD;
   }
 
-  mat2 rot(float a) {
-    float s = sin(a), c = cos(a);
-    return mat2(c, -s, s, c);
-  }
-
-  // Curved stripe field via domain-warped projection
-  float curvedStripes(vec2 p, float t) {
-    // Domain warp the coordinates by a slowly changing fbm field
-    vec2 w = vec2(fbm(p * 0.7 + t * 0.05), fbm(p * 0.7 - t * 0.04));
-    p += (w - 0.5) * 2.2; // warp strength
-    float angle = fbm(p * 0.35 + t * 0.03) * 3.14159;
-    p = rot(angle) * p;
-    float stripes = 0.5 + 0.5 * sin(p.x * 7.5 + t * 1.2);
-    // Convert to crisp bands
-    float wline = 0.18; // band width
-    float edge = fwidth(stripes) * 1.5;
-    return smoothstep(0.5 - wline - edge, 0.5 - wline + edge, stripes) -
-           smoothstep(0.5 + wline - edge, 0.5 + wline + edge, stripes);
-  }
-
-  // Large blobby masks
-  float blobs(vec2 p, float t) {
-    vec2 q = p;
-    q += 0.35 * vec2(cos(t*0.2), sin(t*0.23));
-    q += (fbm(p*0.8 - t*0.05) - 0.5) * 2.0;
-    float v = fbm(q*1.2);
-    float e = fwidth(v) * 1.5;
-    return smoothstep(0.52 - e, 0.52 + e, v);
-  }
+  // Combine SDFs: union and subtraction
+  float opUnion(float a, float b) { return min(a, b); }
+  float opSubtract(float a, float b) { return max(a, -b); }
 
   void main() {
-    vec2 uv = vUv;
-    // Map to centered, aspect-correct coords
     vec2 res = iResolution.xy;
     float aspect = res.x / res.y;
-    vec2 p = (uv * 2.0 - 1.0);
+    vec2 p = vUv * 2.0 - 1.0;
     p.x *= aspect;
 
     float t = iTime;
 
-    // Base large white regions
-    float mask = blobs(p*0.8, t);
+    // Primary sweeping stroke (top-left to bottom-right)
+    vec2 a1 = vec2(-1.35 * aspect,  0.90);
+    vec2 b1 = vec2(-0.40 * aspect + 0.25*sin(t*0.6),  0.60);
+    vec2 c1 = vec2( 0.55 * aspect + 0.30*cos(t*0.5), -0.40);
+    vec2 d1 = vec2( 1.30 * aspect, -0.85);
+    float sd = sdBezierStroke(p, a1, b1, c1, d1, 0.55, 0.06);
 
-    // Flowing stripes layered on top
-    float stripes = curvedStripes(p, t);
+    // Secondary bottom-left curl
+    vec2 a2 = vec2(-1.10 * aspect, -0.85);
+    vec2 b2 = vec2(-0.65 * aspect, -0.55);
+    vec2 c2 = vec2( 0.05 * aspect, -0.10 + 0.10*sin(t*0.7));
+    vec2 d2 = vec2( 0.80 * aspect,  0.10 + 0.06*cos(t*0.6));
+    sd = opUnion(sd, sdBezierStroke(p, a2, b2, c2, d2, 0.40, 0.10));
 
-    // Combine: either large mask or stripes brighten to white
-    float lum = max(mask, stripes);
+    // Right-side upward flick
+    vec2 a3 = vec2( 0.25 * aspect, -0.25);
+    vec2 b3 = vec2( 0.75 * aspect,  0.05);
+    vec2 c3 = vec2( 0.90 * aspect,  0.50);
+    vec2 d3 = vec2( 0.70 * aspect,  1.10);
+    sd = opUnion(sd, sdBezierStroke(p, a3, b3, c3, d3, 0.28, 0.04));
 
-    // Optional secondary thin highlights
-    float highlights = curvedStripes(p * 1.65 + 2.7, t * 0.8);
-    lum = max(lum, highlights * 0.9);
+    // Cutout holes to mimic negative spaces
+    vec2 ha = vec2( 0.25 * aspect, -0.10);
+    vec2 hb = vec2( 0.70 * aspect,  0.05);
+    vec2 hc = vec2( 0.55 * aspect,  0.35);
+    vec2 hd = vec2( 0.30 * aspect,  0.45);
+    float hole1 = sdBezierStroke(p, ha, hb, hc, hd, 0.16, 0.02);
+    sd = opSubtract(sd, hole1);
 
-    // High-contrast black/white output
-    vec3 col = vec3(lum > 0.5 ? 1.0 : 0.0);
+    vec2 ha2 = vec2(-0.80 * aspect, -0.20);
+    vec2 hb2 = vec2(-0.35 * aspect, -0.05);
+    vec2 hc2 = vec2( 0.10 * aspect,  0.20);
+    vec2 hd2 = vec2( 0.35 * aspect,  0.35);
+    float hole2 = sdBezierStroke(p, ha2, hb2, hc2, hd2, 0.20, 0.04);
+    sd = opSubtract(sd, hole2);
+
+    // Convert SDF to high-contrast color with AA
+    float edge = fwidth(sd) * 1.25;
+    float fill = smoothstep(0.0, edge, -sd);
+    vec3 col = vec3(fill);
     gl_FragColor = vec4(col, 1.0);
   }
 `;
